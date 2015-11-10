@@ -1,0 +1,3 @@
+[submodule "API_server/Nightingale"]
+	path = API_server/Nightingale
+	url = https://github.com/UnwrittenTech/Nightingale
