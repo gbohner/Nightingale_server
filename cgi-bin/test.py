@@ -8,8 +8,8 @@ output_dir = "/var/www/html/data/"
 
 file_path = download_url_to_file(url, output_dir)
 
-#post_data = cgi.FieldStorage()
-#query = post_data["query"].value
+# post_data = cgi.FieldStorage()
+# query = post_data["query"].value
 query = "diabetes"
 
 headers, results_list, results_json = extract_from_hscic_excel(file_path, query)

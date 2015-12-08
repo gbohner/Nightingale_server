@@ -11,7 +11,7 @@
         {
         	$.ajaxSetup({cache:false})
             $.ajax({
-                url: "http://7c39a202.ngrok.com/aggregate?term="+"<?php echo $_POST["query"]; ?>",
+                url: "<?php $_SERVER['REMOTE_ADDR'] ?>"+"/cgi-bin/test.py",
                 type: "POST",
                 datatype: "application/json",
                 crossDomain: true,
@@ -19,125 +19,7 @@
                 success: function(response_json){
                 		console.log("successful run!")
                 		console.log(response_json)
-            		
-            			
-						function create_elements(){
-							// Element types
-							var item = document.createElement("div")
-							var link = document.createElement("a")
-							var image_div = document.createElement("div")
-							var content_div = document.createElement("div")
-							var image = document.createElement("img")
-							var title = document.createElement("h3")
-							var date = document.createElement("p")
-							var name = document.createElement("p")
-							
-							//Element bootstrap classes
-							item.className = "row"
-							link.className = ""
-							image_div.className = "col-md-4"
-							content_div.className = "col-md-8"
-							image.className="img-responsive"
-							title.className="title"
-							date.className="text-muted"
-							name.className="text-muted"
-
-							//default values
-							image.src="http://placehold.it/1280X720"
-
-							return {
-								item: item,
-								link: link,
-								title: title,
-								image_div: image_div,
-								content_div: content_div,
-								image: image,
-								date: date,
-								name: name,
-							}
-						}
-
-						function create_new_item(href, title, author, date, image){
-							elems = create_elements()
-
-							//Fill up contents
-							elems.link.href = href
-							elems.title.innerText = title
-							elems.name.innerText = author
-							elems.date.innerText = date
-							elems.image.src = image
-
-							//Set up structure
-							elems.image_div.appendChild(elems.image)
-							elems.content_div.appendChild(elems.title)
-							elems.content_div.appendChild(elems.name)
-							elems.content_div.appendChild(elems.date)
-							elems.link.appendChild(elems.image_div)
-							elems.link.appendChild(elems.content_div);
-							elems.item.appendChild(elems.link);
-
-
-							return elems.item
-						}
-
-
-                		response_json.article.reverse()
-                		response_json.article.forEach(function(article){
-                			item = create_new_item(
-                				article.url,
-                				article.title, 
-                				"",
-                				article.date,
-                				"http://placehold.it/1280X720"
-                			)
-							
-							document.getElementById("articles").appendChild(item)
-                		})
-
-            			response_json.tweets.forEach(function(tweet){
-            				item = create_new_item(
-                				"http://twitter.com/"+tweet.user.screenName,
-                				tweet.text, 
-                				tweet.user.screenName,
-                				"",
-                				"http://placehold.it/150X300"
-                			)
-
-                			item.childNodes[0].childNodes[1].childNodes[0].style.fontSize = "small"
-							
-							document.getElementById("tweets").appendChild(item)
-                		})
-
-            			response_json.document.reverse()
-                		response_json.document.forEach(function(doc){
-                			item = create_new_item(
-                				"http://www.ncbi.nlm.nih.gov/pubmed/"+doc.xid,
-                				doc.title, 
-                				doc.lastauthor,
-                				"",
-                				"http://placehold.it/1280X720"
-                			)
-     
-							document.getElementById("documents").appendChild(item)
-                		})
-
-                		var paragraph = document.createElement("div")
-						
-                		paragraph.innerText = "Dr Foday Saher"
-						document.getElementById("experts").appendChild(paragraph)
-
-						var paragraph = document.createElement("div")
-						
-                		paragraph.innerText = "Dr Stephan Becker"
-						document.getElementById("experts").appendChild(paragraph)
-
-
-						var paragraph = document.createElement("div")
-						
-                		paragraph.innerText = "Dr Nathalie MacDermott"
-						document.getElementById("experts").appendChild(paragraph)
-
-                        // $("#articles").html(response_json["article"][0]["date"]); 
+				
                 }
             });
         });
